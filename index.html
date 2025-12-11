@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKS Home Decor - Transformando Sonhos em Realidade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --color-background: #f5f1ed;
+            --color-text: #1a1a1a;
+            --color-primary: #8b7355;
+            --color-accent: #c9a882;
+            --color-white: #ffffff;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 12px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Header */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--color-white);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 80px;
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 6px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-text);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--color-white);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .mobile-menu-overlay.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav-menu li {
+            margin: 2rem 0;
+        }
+
+        .mobile-nav-menu a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        /* Floating Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .back-to-top {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--color-accent);
+            transform: translateY(-3px);
+        }
+
+        .whatsapp-float {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 2rem;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-carousel {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--color-white);
+            max-width: 900px;
+            padding: 2rem;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--color-accent);
+            color: var(--color-text);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .carousel-prev {
+            left: 2rem;
+        }
+
+        .carousel-next {
+            right: 2rem;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--color-accent);
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section-title-wrapper {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            font-family: var(--font-heading);
+            color: var(--color-text);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-accent);
+        }
+
+        /* Text Animation */
+        .scroll-text {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-text.visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* Who We Are */
+        .who-we-are {
+            background: var(--color-white);
+        }
+
+        .who-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .who-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .signature {
+            font-style: italic;
+            color: var(--color-primary);
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+
+        /* Services */
+        .what-we-do {
+            background: var(--color-background);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--color-white);
+            padding: 2.5rem;
+            text-align: left;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* How We Work - Progressive Carousel */
+        .how-we-work {
+            background: var(--color-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .how-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .progress-carousel {
+            position: relative;
+            width: 100%;
+        }
+
+        .progress-slide {
+            display: none;
+            width: 100%;
+        }
+
+        .progress-slide.active {
+            display: block;
+        }
+
+        .progress-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .progress-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0;
+            margin-top: 2rem;
+            background: rgba(139, 115, 85, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .progress-btn {
+            padding: 1.5rem;
+            text-align: left;
+            border: none;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .progress-btn:last-child {
+            border-right: none;
+        }
+
+        .progress-btn h4 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            background: var(--color-text);
+            color: var(--color-white);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .progress-btn p {
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--color-accent);
+            width: 0%;
+        }
+
+        .progress-btn.active .progress-bar {
+            animation: progressBar 5s linear forwards;
+        }
+
+        @keyframes progressBar {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Gallery */
+        .gallery-section {
+            background: var(--color-background);
+        }
+
+        .gallery-columns {
+            columns: 3;
+            column-gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            margin-bottom: 1rem;
+            break-inside: avoid;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Image Modal */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--color-white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--color-white);
+            overflow: hidden;
+        }
+
+        .marquee-container {
+            display: flex;
+            gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .marquee-column {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            animation: marqueeVertical 20s linear infinite;
+        }
+
+        .marquee-column:nth-child(2) .marquee-content {
+            animation-direction: reverse;
+        }
+
+        @keyframes marqueeVertical {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+
+        .testimonial-card {
+            background: var(--color-background);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(139, 115, 85, 0.1);
+            min-height: 120px;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .testimonial-body {
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* FAQ */
+        .faq-section {
+            background: var(--color-background);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: var(--color-primary);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 1rem;
+            color: #666;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 1rem 1.5rem 3rem;
+        }
+
+        /* Contact */
+        .contact-section {
+            background: var(--color-white);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-form {
+            background: var(--color-background);
+            padding: 2.5rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            background: var(--color-white);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info {
+            padding: 2rem 0;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--color-primary);
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .contact-item p,
+        .contact-item a {
+            color: #666;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icon.instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .social-icon.facebook {
+            background: #1877F2;
+        }
+
+        .social-icon.tiktok {
+            background: #000000;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--color-text);
+            padding: 3rem 2rem 1.5rem;
+            color: #ccc;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 8px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social .social-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 1.3rem;
+        }
+
+        .footer-quote {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-link {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .developer-link:hover {
+            color: var(--color-white);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .who-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+
+            .gallery-columns {
+                columns: 1;
+            }
+
+            .progress-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-btn {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .progress-btn:last-child {
+                border-bottom: none;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-prev {
+                left: 1rem;
+            }
+
+            .carousel-next {
+                right: 1rem;
+            }
+
+            .loading-logo {
+                font-size: 3rem;
+            }
+
+            .progress-slide img {
+                height: 300px;
+            }
+
+            .footer-top {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-float {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+            }
+
+            .back-to-top {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="no-scroll">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">IKS</div>
+    </div>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo-text">IKS</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#quem-somos">Quem Somos</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#como-trabalhamos">Como Trabalhamos</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay">
+        <button class="mobile-menu-close">×</button>
+        <nav>
+            <ul class="mobile-nav-menu">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#quem-somos">Quem Somos</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#como-trabalhamos">Como Trabalhamos</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <button class="back-to-top" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <a href="https://wa.me/5511917088179?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20projetos%20da%20IKS%20Home%20Decor." class="whatsapp-float" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="image-modal">
+        <button class="image-modal-close">×</button>
+        <img src="" alt="Imagem ampliada">
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="hero-carousel">
+                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920');">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=1920');">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1920');">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-content">
+                    <h1 class="scroll-text">Transformando Sonhos em Histórias Vivas</h1>
+                    <p class="scroll-text">Transforme seu ambiente em um espaço cheio de aconchego e funcionalidade</p>
+                    <a href="#contato" class="cta-button scroll-text">Vamos Criar Seu Projeto</a>
+                </div>
+            </div>
+            <div class="carousel-nav carousel-prev">‹</div>
+            <div class="carousel-nav carousel-next">›</div>
+            <div class="carousel-dots">
+                <div class="carousel-dot active"></div>
+                <div class="carousel-dot"></div>
+                <div class="carousel-dot"></div>
+            </div>
+        </section>
+
+        <!-- Who We Are -->
+        <section class="who-we-are" id="quem-somos">
+            <div class="section-title-wrapper">
+                <h2 class="section-title scroll-text">Quem Somos</h2>
+            </div>
+            <div class="who-content">
+                <div class="who-text scroll-text">
+                    <p>Nosso trabalho nasce da crença de que cada lar carrega histórias únicas. Acreditamos que um projeto vai muito além de móveis: é sobre acolher, ouvir e dar vida aos sonhos.</p>
+                    <p>Por isso, nosso propósito como empresa é transformar a experiência do cliente desde o primeiro contato até a finalização, para que ele perceba amor em cada detalhe e sinta que tudo foi pensado para tornar especial o projeto sonhado.</p>
+                    <p class="signature">— Ederson e Laís, CEO da IKS Home Decor</p>
+                </div>
+                <div class="who-text scroll-text">
+                    <p><strong>Nosso compromisso é simples:</strong> oferecer qualidade, mas também cuidado e verdade em cada etapa.</p>
+                    <p>Acreditamos que cada lar tem sua própria essência, e que cada detalhe é uma oportunidade para viver momentos especiais e criar memórias inesquecíveis.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Do -->
+        <section class="what-we-do" id="servicos">
+            <div class="section-title-wrapper">
+                <h2 class="section-title scroll-text">O Que Fazemos</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scroll-text">
+                    <h3>Ambientes Residenciais</h3>
+                    <p>Criamos projetos personalizados que unem conforto, funcionalidade e estética. Cada ambiente é pensado para refletir sua essência, tornando o dia a dia mais leve, bonito e cheio de significado.</p>
+                </div>
+                <div class="service-card scroll-text">
+                    <h3>Ambientes Comerciais</h3>
+                    <p>Desenvolvemos projetos que valorizam a identidade do seu negócio, unindo design e praticidade para criar ambientes que encantam clientes e tornam o trabalho mais inspirador e eficiente.</p>
+                </div>
+                <div class="service-card scroll-text">
+                    <h3>Projetos de Restauração</h3>
+                    <p>Realizamos complementações e reparações em espaços já existentes. Dessa forma, damos uma nova vida ao ambiente, trazendo modernidade e funcionalidade sem pesar no bolso.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How We Work -->
+        <section class="how-we-work" id="como-trabalhamos">
+            <div class="how-container">
+                <div class="section-title-wrapper">
+                    <h2 class="section-title scroll-text">Como Trabalhamos</h2>
+                </div>
+
+                <div class="progress-carousel">
+                    <div class="progress-slide active">
+                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1920" alt="Primeiro Contato">
+                    </div>
+                    <div class="progress-slide">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920" alt="Consultoria">
+                    </div>
+                    <div class="progress-slide">
+                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1920" alt="Materiais">
+                    </div>
+                    <div class="progress-slide">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920" alt="Desenvolvimento">
+                    </div>
+
+                    <div class="progress-controls">
+                        <button class="progress-btn active" data-slide="0">
+                            <h4>1. Primeiro Contato</h4>
+                            <p>Envie medidas, fotos ou planta do espaço. Ou agende uma visita técnica ou call.</p>
+                            <div class="progress-bar"></div>
+                        </button>
+                        <button class="progress-btn" data-slide="1">
+                            <h4>2. Consultoria</h4>
+                            <p>Vamos até você para entender suas necessidades e compartilhar referências visuais.</p>
+                            <div class="progress-bar"></div>
+                        </button>
+                        <button class="progress-btn" data-slide="2">
+                            <h4>3. Materiais</h4>
+                            <p>Seleção personalizada de materiais, cores e acabamentos para seu projeto.</p>
+                            <div class="progress-bar"></div>
+                        </button>
+                        <button class="progress-btn" data-slide="3">
+                            <h4>4. Projeto</h4>
+                            <p>Elaboramos o projeto técnico completo e apresentamos para sua aprovação.</p>
+                            <div class="progress-bar"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="max-width: 900px; margin: 4rem auto 0; padding: 2.5rem; background: rgba(201, 168, 130, 0.1); border-left: 4px solid var(--color-accent);">
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 1rem; color: var(--color-accent);">Nosso Diferencial</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">Não temos espaço físico de atendimento tradicional. <strong>Nós vamos até você!</strong> Realizamos visitas técnicas no local, fazemos todas as medidas necessárias, oferecemos consultoria personalizada e desenvolvemos o projeto e orçamento sob medida para suas necessidades.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.8;"><strong>Cada cliente é recebido de um jeito único.</strong> Você não precisa ir até uma loja ou marcenaria - nós levamos toda a experiência IKS até o conforto do seu espaço.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="gallery-section" id="galeria">
+            <div class="section-title-wrapper">
+                <h2 class="section-title scroll-text">Nossos Projetos</h2>
+            </div>
+            <div class="gallery-columns">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600" alt="Projeto 1" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Projeto 2" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600" alt="Projeto 3" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Projeto 4" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=600" alt="Projeto 5" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600" alt="Projeto 6" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600" alt="Projeto 7" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=600" alt="Projeto 8" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=600" alt="Projeto 9" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600" alt="Projeto 10" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=600" alt="Projeto 11" /></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600" alt="Projeto 12" /></div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="section-title-wrapper">
+                <h2 class="section-title scroll-text">Depoimentos</h2>
+            </div>
+            <div class="marquee-container">
+                <div class="marquee-column">
+                    <div class="marquee-content">
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Maria Silva</div>
+                            <div class="testimonial-body">"O atendimento personalizado da IKS fez toda diferença. Eles entenderam exatamente o que eu queria!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">João Santos</div>
+                            <div class="testimonial-body">"Profissionais extremamente competentes. Meu apartamento ficou lindo!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Ana Costa</div>
+                            <div class="testimonial-body">"Recomendo demais! Transformaram minha casa em um verdadeiro lar."</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Maria Silva</div>
+                            <div class="testimonial-body">"O atendimento personalizado da IKS fez toda diferença. Eles entenderam exatamente o que eu queria!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">João Santos</div>
+                            <div class="testimonial-body">"Profissionais extremamente competentes. Meu apartamento ficou lindo!"</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="marquee-column">
+                    <div class="marquee-content">
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Pedro Oliveira</div>
+                            <div class="testimonial-body">"Qualidade impecável e prazo cumprido. Super satisfeito!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Carla Mendes</div>
+                            <div class="testimonial-body">"Equipe atenciosa e projeto maravilhoso. Vale cada centavo!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Lucas Ferreira</div>
+                            <div class="testimonial-body">"Melhor investimento que fiz. Minha loja está linda!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Pedro Oliveira</div>
+                            <div class="testimonial-body">"Qualidade impecável e prazo cumprido. Super satisfeito!"</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-name">Carla Mendes</div>
+                            <div class="testimonial-body">"Equipe atenciosa e projeto maravilhoso. Vale cada centavo!"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq-section">
+            <div class="section-title-wrapper">
+                <h2 class="section-title scroll-text">Perguntas Frequentes</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">+</span>
+                        <span>Como funciona o atendimento da IKS?</span>
+                    </div>
+                    <div class="faq-answer">
+                        Vamos até você! Realizamos visita técnica no local, tiramos todas as medidas, oferecemos consultoria personalizada e desenvolvemos o projeto completo.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">+</span>
+                        <span>Qual o prazo de entrega dos projetos?</span>
+                    </div>
+                    <div class="faq-answer">
+                        Os prazos variam entre 30 a 60 dias, dependendo da complexidade do projeto. Sempre cumprimos os prazos acordados.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">+</span>
+                        <span>Vocês oferecem financiamento?</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sim! Oferecemos parcelamento em até 36 vezes e prazo de pagamento de até 90 dias para facilitar a realização do seu projeto.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">+</span>
+                        <span>Atendem projetos comerciais?</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sim! Desenvolvemos projetos tanto residenciais quanto comerciais, sempre personalizados conforme a identidade e necessidades de cada cliente.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">+</span>
+                        <span>É possível fazer apenas reforma de ambientes existentes?</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sim! Realizamos projetos de restauração, complementações e reparações em espaços já existentes, trazendo modernidade e funcionalidade.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact-section" id="contato">
+            <div class="section-title-wrapper">
+                <h2 class="section-title scroll-text">Entre em Contato</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone / WhatsApp</label>
+                            <input type="tel" id="telefone" name="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Enviar Mensagem</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <h3>Informações de Contato</h3>
+                    <div class="contact-item">
+                        <h4>WhatsApp</h4>
+                        <p><a href="https://wa.me/5511917088179">(11) 91708-8179</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>E-mail</h4>
+                        <p><a href="mailto:contato@ikshomedecor.com.br">contato@ikshomedecor.com.br</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Site</h4>
+                        <p><a href="https://www.ikshomedecor.com.br" target="_blank">www.ikshomedecor.com.br</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Horário de Atendimento</h4>
+                        <p>Segunda a Sexta: 9h às 18h<br>Sábado: 9h às 13h</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-logo">IKS</div>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/ikshomedecor" target="_blank" class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="footer-quote">"Buscamos criar projetos que refletem a simplicidade, elegância e funcionalidade, proporcionando ambientes aconchegantes e inspiradores em cada detalhe"</p>
+            <div class="footer-bottom">
+                <p>© 2025 IKS Home Decor. Todos os direitos reservados.</p>
+                <p>Desenvolvido por <a href="https://wa.me/5511960573657?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20seus%20serviços%20de%20desenvolvimento." class="developer-link" target="_blank">Lucas Cabral</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Loading Screen
+            setTimeout(() => {
+                const loadingScreen = document.querySelector('.loading-screen');
+                const body = document.body;
+                loadingScreen.classList.add('hidden');
+                body.classList.remove('no-scroll');
+            }, 3000);
+
+            // Header scroll effect
+            const header = document.querySelector('.site-header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // Back to Top Button
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Mobile Menu
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileClose = document.querySelector('.mobile-menu-close');
+            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-nav-menu a');
+            const body = document.body;
+
+            function toggleMobileMenu() {
+                mobileOverlay.classList.toggle('active');
+                body.classList.toggle('no-scroll');
+                if (mobileOverlay.classList.contains('active')) {
+                    mobileToggle.textContent = '×';
+                } else {
+                    mobileToggle.textContent = '☰';
+                }
+            }
+
+            mobileToggle.addEventListener('click', toggleMobileMenu);
+            mobileClose.addEventListener('click', toggleMobileMenu);
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mobileOverlay.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            // Hero Carousel
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                if (n >= slides.length) currentSlide = 0;
+                if (n < 0) currentSlide = slides.length - 1;
+
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }
+
+            function nextSlide() {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+
+            function prevSlide() {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                });
+            });
+
+            setInterval(nextSlide, 5000);
+
+            // Progressive Carousel
+            const progressBtns = document.querySelectorAll('.progress-btn');
+            const progressSlides = document.querySelectorAll('.progress-slide');
+            let currentProgressSlide = 0;
+            let progressInterval;
+
+            function showProgressSlide(n) {
+                progressSlides.forEach(slide => slide.classList.remove('active'));
+                progressBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    const bar = btn.querySelector('.progress-bar');
+                    bar.style.animation = 'none';
+                });
+
+                progressSlides[n].classList.add('active');
+                progressBtns[n].classList.add('active');
+
+                setTimeout(() => {
+                    const activeBar = progressBtns[n].querySelector('.progress-bar');
+                    activeBar.style.animation = 'progressBar 5s linear forwards';
+                }, 10);
+            }
+
+            function autoProgress() {
+                clearInterval(progressInterval);
+                progressInterval = setInterval(() => {
+                    currentProgressSlide = (currentProgressSlide + 1) % progressSlides.length;
+                    showProgressSlide(currentProgressSlide);
+                }, 5000);
+            }
+
+            progressBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    currentProgressSlide = index;
+                    showProgressSlide(index);
+                    autoProgress();
+                });
+            });
+
+            showProgressSlide(0);
+            autoProgress();
+
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Gallery Image Modal
+            const galleryItems = document.querySelectorAll('.gallery-item img');
+            const imageModal = document.querySelector('.image-modal');
+            const modalImg = imageModal.querySelector('img');
+            const modalClose = imageModal.querySelector('.image-modal-close');
+
+            galleryItems.forEach(img => {
+                img.addEventListener('click', () => {
+                    modalImg.src = img.src;
+                    imageModal.classList.add('active');
+                    body.classList.add('no-scroll');
+                });
+            });
+
+            modalClose.addEventListener('click', () => {
+                imageModal.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    imageModal.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                }
+            });
+
+            // Scroll Text Animation
+            const scrollTexts = document.querySelectorAll('.scroll-text');
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            scrollTexts.forEach(text => scrollObserver.observe(text));
+
+            // Gallery Items Animation
+            const galleryItemsAnim = document.querySelectorAll('.gallery-item');
+            const galleryObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 50);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            galleryItemsAnim.forEach(item => galleryObserver.observe(item));
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerHeight = 80;
+                        const targetPosition = target.offsetTop - headerHeight;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Form submission
+            const form = document.querySelector('.contact-form form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+                form.reset();
+            });
+        });
+    </script>
+</body>
+
+</html>
